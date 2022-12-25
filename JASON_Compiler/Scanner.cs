@@ -107,12 +107,12 @@ namespace JASON_Compiler
                 }
                 else if (CurrentChar == '"')  // string case 
                 {
-
+                    bool flag = false;
                     for (j = i + 1; j < SourceCode.Length; j++)
                     {
                         CurrentChar = SourceCode[j];
                         if (CurrentChar == '\r' || CurrentChar == '\n')
-                            break;
+                            flag = true;
                         if (CurrentChar == '"')
                         {
                             CurrentLexeme += CurrentChar;
@@ -126,7 +126,7 @@ namespace JASON_Compiler
 
                     }
                     //checking if the string is not correct 
-                    if (CurrentLexeme[CurrentLexeme.Length - 1] != '"')
+                    if (flag)
                         Errors.Error_List.Add(CurrentLexeme);
                     else
                     {
@@ -193,18 +193,19 @@ namespace JASON_Compiler
                         }
                         CurrentLexeme += CurrentChar;
                     }
-                    if (CurrentLexeme.Length >= 2 && CurrentLexeme[CurrentLexeme.Length - 1] == '/' && CurrentLexeme[CurrentLexeme.Length - 2] == '*')
+                    if (!(CurrentLexeme.Length >= 2 && CurrentLexeme[CurrentLexeme.Length - 1] == '/' && CurrentLexeme[CurrentLexeme.Length - 2] == '*'))
                     {
-                        //Console.WriteLine(CurrentLexeme);
-
-                        // FindTokenClass(CurrentLexeme);
-                    }
-                    else
-                    {
-                        i++;
+                        i = j;
                         //Console.WriteLine("dudeeee again");
-                        Errors.Error_List.Add("/*");
+                        Errors.Error_List.Add(CurrentLexeme);
+                        
                     }
+                    //else
+                    //{
+                    //    //Console.WriteLine(CurrentLexeme);
+
+                    //    // FindTokenClass(CurrentLexeme);
+                    //}
                 }
                 else if (CurrentChar == '<' && i < SourceCode.Length - 1 && SourceCode[i + 1] == '>')
                 {
