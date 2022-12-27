@@ -488,9 +488,10 @@ namespace JASON_Compiler
         Node Declaration_statement()
         {
             Node node = new Node("Declaration_statement");
-            Token_Class tokenClass = TokenStream[InputPointer].token_type;
+           
             if (InputPointer < TokenStream.Count)
             {
+                Token_Class tokenClass = TokenStream[InputPointer].token_type;
                 if (tokenClass == Token_Class.Integer)
                 {
                     node.Children.Add(match(Token_Class.Integer));
@@ -512,8 +513,8 @@ namespace JASON_Compiler
         Node IdList()
         {
             Node node = new Node("IdList");
-            Token_Class tokenClass = TokenStream[InputPointer].token_type;
-            if (InputPointer < TokenStream.Count && tokenClass == Token_Class.Idenifier)
+            
+            if (InputPointer < TokenStream.Count && TokenStream[InputPointer].token_type == Token_Class.Idenifier)
             {
                 node.Children.Add(match(Token_Class.Idenifier));
                 node.Children.Add(IdListDash());
@@ -524,9 +525,10 @@ namespace JASON_Compiler
         Node IdListDash()
         {
             Node node = new Node("IdListDash");
-            Token_Class tokenClass = TokenStream[InputPointer].token_type;
+            
             if (InputPointer < TokenStream.Count)
             {
+                Token_Class tokenClass = TokenStream[InputPointer].token_type;
                 if (tokenClass == Token_Class.Comma)
                 {
                     node.Children.Add(match(Token_Class.Comma));
@@ -541,8 +543,7 @@ namespace JASON_Compiler
         Node WriteStatement()
         {
             Node node = new Node("WriteStatement");
-            Token_Class tokenClass = TokenStream[InputPointer].token_type;
-            if (InputPointer < TokenStream.Count && tokenClass == Token_Class.Write)
+            if (InputPointer < TokenStream.Count && TokenStream[InputPointer].token_type == Token_Class.Write)
             {
                 node.Children.Add(match(Token_Class.Write));
                 node.Children.Add(Expression());
@@ -553,8 +554,8 @@ namespace JASON_Compiler
         Node ReturnStatement()
         {
             Node node = new Node("ReturnStatement");
-            Token_Class tokenClass = TokenStream[InputPointer].token_type;
-            if (InputPointer < TokenStream.Count && tokenClass == Token_Class.Return)
+        
+            if (InputPointer < TokenStream.Count && TokenStream[InputPointer].token_type == Token_Class.Return)
             {
                 node.Children.Add(match(Token_Class.Return));
                 node.Children.Add(Expression());
@@ -565,8 +566,8 @@ namespace JASON_Compiler
         Node RepeatStatement()
         {
             Node node = new Node("RepeatStatement");
-            Token_Class tokenClass = TokenStream[InputPointer].token_type;
-            if (InputPointer < TokenStream.Count && tokenClass == Token_Class.Repeat)
+           
+            if (InputPointer < TokenStream.Count && TokenStream[InputPointer].token_type == Token_Class.Repeat)
             {
                 node.Children.Add(match(Token_Class.Repeat));
                 node.Children.Add(Multi_Stats());
